@@ -1,9 +1,17 @@
 <div class="team pt-3 mt-3">
   <div class="container border shadow">
+    <br>
+    <% flash.each do |key, value| %>
+        <div class="<%= flash_class(key) %>" style = "height:50px">
+          <%= value %>
+        </div>
+      <% end %>
     <div class="row" >
-
+      
       <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 pt-3">
+        
         <h3 class="text-center text-primary"><b> DROP-IN HOURS: Co-working where we’re socially distanced but not alone</b></h3>
+        <br>
         <p >
           ThinQ.tv is a <b >Woman-Owned tech startup</b>. Coding While Female is our activism. We support women & minority engineers, designers, & startups in our video chat Drop-In Hours. Drop In & meet us! We'll greet you when you arrive.<br>
           - <b>No agenda:</b> Drop in on your own schedule.<br>
