@@ -8,15 +8,15 @@ class RsvpqsController < ApplicationController
   end
 
   def create
-    checked_recaptcha = true
+    checked_captcha = true
     if current_user
       @rsvp = current_user.rsvpqs.build(rsvpq_params)
     else
       @rsvp = Rsvpq.new(rsvpq_params)
-      checked_recaptcha = verify_recaptcha(model: @rsvp)
+      checked_captcha = verify_recaptcha(model: @user)
     end
 
-    if checked_recaptcha
+    if checked_captcha
       if @rsvp.save
         flash[:success] = 'Rsvp was successfully created.'
         event = Event.find(params[:rsvpq][:event_id])
