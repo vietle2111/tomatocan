@@ -106,5 +106,5 @@ Rails.application.routes.draw do
       resources :events
     end
   end
-
+  mount ActionCable.server => '/cable'
 end

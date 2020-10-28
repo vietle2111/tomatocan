@@ -1,6 +1,6 @@
 <% if user_signed_in? %>
   <% current_user.update_column(:last_viewed, params[:id]) %>
-  <% attendrecord = Attendance.new(:user_id => current_user.id, :time_in => (Time.now - 7.hours)) %>
+  <% attendrecord = Attendance.new(:user_id => current_user.id, :event_id => params[:event], :time_in => (Time.now - 7.hours), :time_out => (Time.now - 7.hours)) %>
   <% attendrecord.save %>
 
   <!-- Update list of users attending the conversation -->
@@ -48,16 +48,19 @@
         </div>
       </div>
 
-      <% if current_user.id == @user.id %>
+      <!--% if current_user.id == @user.id %-->
       <div class = "border-left border-right border-bottom border-primary pb-1">
         <div class="panel panel-primary">
           <div class=" bg-primary text-white card-header pb-2">        
-              Attendees of <%= @user.name %>'s conversation <button id="refresh" style="color:black; float:right; margin-top:3px">&#8634</button>
+              Attendees of <%= @user.name %>'s conversation <button id="refresh" style="color:black; float:right; margin-top:3px" onclick="loadAttendees()">&#8634</button>
           </div>
-          <div id="attendees"></div>
+          <div id="attendees">
+            <%= render :partial => "layouts/attendees" %>
+          </div>
+          <a href="#" id="tmp">ABC</a>>
         </div>
       </div>
-      <%end%>
+      <!--%end%-->
     </div>
 
     <div class="col-md-9">
@@ -93,6 +96,7 @@
     </div>
   </div>
 
+  <script type="text/javascript" src="jquery.js"></script> 
   <script> // JAVASCRIPT DOES NOT BELONG IN ERB FILES, IT BELONGS IN JS FILES
     // save current user id
     var currID = "<%= current_user.id %>"
@@ -124,13 +128,24 @@
 
     // load attendees list
     function loadAttendees(){
-      $.get("/conversations/attendees", {event: urlParams.get('event'), currentUser: "<%= current_user.id %>", owner: "<%= @user.id %>"}, (data) => {
-        if (data.success == true)
-          $('#attendees').html(data.html)
-      })
-      setTimeout(loadAttendees, 300000);
-    }
+      // update attendee's time_out
+      $.post("/users/unload", {attendid: attendrec});
 
+      document.getElementById("tmp2").innerHTML = (new Date).getTime().toString();
+
+      var attend_data = "<%= @attendees %>";
+      document.getElementById("tmp").innerHTML = attend_data.toString();
+      //$('#attendees_list').empty();
+      var row = document.getElementById('attendees_list').insertRow(0);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      cell1.innerHTML = "OK";
+      cell2.innerHTML = (new Date).getTime().toString();
+      cell3.innerHTML = "End";
+
+      setTimeout(loadAttendees, 30000);
+    }
     // unload actions
     $(window).on('beforeunload', (event) => {
       // remove user from attendees list
@@ -150,6 +165,5 @@
     loadAttendees()
   </script>
 <% else %>
-
   <meta http-equiv="refresh" content="0; URL=https://thinq.tv/login"/>
 <% end %>

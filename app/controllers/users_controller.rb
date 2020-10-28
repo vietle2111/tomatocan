@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def viewer
-    @users = User.where('last_viewed @> ARRAY[?]::integer[]', [params[:event]])
+    @attendees = current_attendees(params[:event])
     pdtnow = Time.now - 7.hours + 5.minutes
     currconvos = Event.where("start_at < ? AND end_at > ?", pdtnow, pdtnow)
     @otherconvos = []
@@ -304,4 +304,17 @@ class UsersController < ApplicationController
 
     return msg
   end
+
+  def current_attendees(event_id)
+    @attendances = (Attendance.where("event_id = ? AND time_out > ?", event_id, Time.now - 7.hours - 1.minutes))
+    attendees_ids = []
+
+    @attendances.each do |a| 
+      attendees_ids << a.user_id
+    end 
+
+    @attendees = User.where(id: attendees_ids)
+    return @attendees
+  end
+
 end

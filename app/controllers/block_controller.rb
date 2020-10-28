@@ -42,9 +42,9 @@ class BlockController < ApplicationController
 
     def unload
         # remove the current event from user's last_viewed array
-        attendance_log = Attendance.find(params[:attendid])
-        attendance_log.time_out = Time.now - 7.hours
-        attendance_log.save
+        @attendance_log = Attendance.find(params[:attendid])
+        @attendance_log.update_attribute(:time_out, Time.now - 7.hours)
+        #@attendance_log.save
 
         # return 200 ok Why do we do this?
         head :ok

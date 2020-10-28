@@ -43,6 +43,8 @@ gem 'bootstrap', '~> 4.5.0'
 gem 'popper_js', '~> 1.16.0'
 gem 'recurring_select'
 gem 'recaptcha', require: "recaptcha/rails"
+gem 'pusher'
+gem 'figaro'
 
 group :test, :development do
   gem 'minitest'

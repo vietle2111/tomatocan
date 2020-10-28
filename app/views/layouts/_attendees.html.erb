@@ -1,24 +1,23 @@
-<% user_array = [] %>
-<% @users.each do |user| %>
-  <% user =  User.find_by_id(user) %>
-  <% user_array << user %>
-<% end %>
+<b id="tmp2">ABC</b>  
+<% if @attendees%>
+  <% @attendees.sort_by { |user| user.name } %>
 
-<% user_array = user_array.sort_by {|u| u.name} %>
+  <div style="padding:10px 15px 7px 15px; font-size: 15px">
+    <% @attendees.each do |user| %>
+      <div style="padding:8px 0px 0px 0px">
+        <% if user.profilepic.present? && user.profilepic != '' %>
+            <%= image_tag user.profilepic.url.to_s, :class => "img-circle", :id => "image", style: "line-height: 1.7; height: 1.7em; line-width: 1.7; width: 1.7em; margin-top: -5px" %>
+        <% else %>
+            <%= image_tag "logoDigitalHollow300.png", :class => "img-circle", :id => "image", style: "background-color:white; line-height: 1.7; height: 1.7em; line-width: 1.7; width: 1.7em; margin-top: -5px" %>
+        <% end %>
+        <%= link_to user.name, user_profile_path(user.permalink), class: "btn btn-lg", style: "border-radius: 5px;" %>
+        <% owner_id = params[:owner] %>
+        <% if current_user.id == owner_id && owner_id != user.id %>
+          <button id="block_button" style="float:right; margin-top:-3px" onclick="block('<%=user.name%>','<%=user.id%>')">Block</button>
+        <% end %>
+      </div>
+    <% end %>
 
-<div style="padding:10px 15px 7px 15px; font-size: 15px">
-  <% user_array.each do |user| %>
-    <div style="padding:8px 0px 0px 0px">
-      <% if user.profilepic.present? && user.profilepic != '' %>
-          <%= image_tag user.profilepic.url.to_s, :class => "img-circle", :id => "image", style: "line-height: 1.7; height: 1.7em; line-width: 1.7; width: 1.7em; margin-top: -5px" %>
-      <% else %>
-          <%= image_tag "logoDigitalHollow300.png", :class => "img-circle", :id => "image", style: "background-color:white; line-height: 1.7; height: 1.7em; line-width: 1.7; width: 1.7em; margin-top: -5px" %>
-      <% end %>
-      <%= link_to user.name, user_profile_path, class: "btn btn-lg", style: "border-radius: 5px;" %>
-      <% if current_user.id == @user.id && user.id != @user.id %>
-        <button id="block_button" style="float:right; margin-top:-3px" onclick="block('<%=user.name%>','<%=@user.id%>','<%=user.id%>')">Block</button>
-      <% end %>
-    </div>
   <% end %>
 </div>
 
