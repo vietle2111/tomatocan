@@ -43,8 +43,15 @@ gem 'bootstrap', '~> 4.5.0'
 gem 'popper_js', '~> 1.16.0'
 gem 'recurring_select'
 gem 'recaptcha', require: "recaptcha/rails"
+<<<<<<< HEAD
 gem 'pusher'
 gem 'figaro'
+=======
+gem "grape"
+gem 'grape-active_model_serializers'
+gem 'jwt'
+gem 'rack-mini-profiler'
+>>>>>>> a27b09e86a86880ae0a205bb4b7cc506a9bf1b90
 
 group :test, :development do
   gem 'minitest'
