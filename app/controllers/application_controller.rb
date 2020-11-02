@@ -35,6 +35,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def allow_iframe
+    response.headers.delete "X-Frame-Options"
+  end
+
   protected
 
   def update_sanitized_params
@@ -45,5 +49,4 @@ class ApplicationController < ActionController::Base
     @facebook_user ||= User.find(session[:user_id]) if session[:user_id]
   end
   helper_method :facebook_user
-
 end

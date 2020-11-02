@@ -38,7 +38,7 @@ module Crowdpublishtv
 #    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
     config.assets.paths << "#{Rails.root}/app/assets/video"
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'SAMEORIGIN',
+      'X-Frame-Options' => 'ALLOW-FROM https://zahrakhan06.wixsite.com',
       'X-XSS-Protection' => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff',
       'X-Download-Options' => 'noopen',
