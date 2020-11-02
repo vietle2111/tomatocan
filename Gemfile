@@ -48,7 +48,6 @@ gem 'figaro'
 gem "grape"
 gem 'grape-active_model_serializers'
 gem 'jwt'
-gem 'rack-mini-profiler'
 
 group :test, :development do
   gem 'minitest'
