@@ -48,6 +48,7 @@ gem 'figaro'
 gem "grape"
 gem 'grape-active_model_serializers'
 gem 'jwt'
+gem 'rails_12factor', group: :production
 
 group :test, :development do
   gem 'minitest'
