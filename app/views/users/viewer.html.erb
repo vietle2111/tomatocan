@@ -57,14 +57,18 @@
           <div id="attendees">
             <%= render :partial => "layouts/attendees" %>
           </div>
-          <a href="#" id="tmp">Test</a>>
+          <a href="#" id="tmp">Test</a>
         </div>
       </div>
       <!--%end%-->
     </div>
 
     <div class="col-md-9">
+      <div class = "text-center">
+          Join our conversation & introduce yourself!<br>
+      </div>    
       <%= render 'layouts/jitsi' %>
+      <!--
       <% if !@otherconvos.empty? %>
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -78,6 +82,7 @@
         </div>
         <div>
       <%end%>
+      -->
 
       <div class="container">
         <a href="#demo" class="btn btn-info" data-toggle="collapse" style="background-color: #8C1D40; font-size: 20px; margin-left: -20px">If you're not seeing or hearing the Live Conversation in the viewer above &#9660 </a>
@@ -134,7 +139,7 @@
       document.getElementById("tmp2").innerHTML = (new Date).getTime().toString();
 
       var attend_data = "<%= @attendees %>";
-      document.getElementById("tmp").innerHTML = attend_data.toString();
+      document.getElementById("tmp").innerHTML = "Here is tmp";
       //$('#attendees_list').empty();
       var row = document.getElementById('attendees_list').insertRow(0);
       var cell1 = row.insertCell(0);
