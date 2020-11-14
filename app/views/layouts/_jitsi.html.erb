@@ -11,11 +11,10 @@
 			roomName:  "thinqtv", // "<%= params[:chatrm] %>",
 			parentNode: document.querySelector('#meet'),
             userInfo: {
-                displayName: "<%= username %>"
+                displayName: "<%= username %>",
             }
 		}
 		var api = new JitsiMeetExternalAPI(domain, options);
-	});
 </script>
 <div class="card">
 	<h5 class="card-header bg-primary text-white">

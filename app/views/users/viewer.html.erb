@@ -139,7 +139,7 @@
       document.getElementById("tmp2").innerHTML = (new Date).getTime().toString();
 
       var attend_data = "<%= @attendees %>";
-      document.getElementById("tmp").innerHTML = "Here is tmp";
+      //document.getElementById("tmp").innerHTML = "Here is tmp";
       //$('#attendees_list').empty();
       var row = document.getElementById('attendees_list').insertRow(0);
       var cell1 = row.insertCell(0);
@@ -150,6 +150,7 @@
       cell3.innerHTML = "End";
 
       setTimeout(loadAttendees, 30000);
+
     }
     // unload actions
     $(window).on('beforeunload', (event) => {

@@ -53,7 +53,8 @@ class EventsController < ApplicationController
         reminder_date = @event.start_at - 1.days
         EventMailer.with(user: user , event: @event).event_reminder.deliver_later(wait_until: reminder_date)
         EventMailer.with(user: user , event: @event).event_reminder.deliver_later(wait_until:  reminder_hour)
-        format.html { redirect_to "/" }
+        flash[:success] = 'A new conversation was successfully created.'
+        format.html { redirect_to event_path(@event.id) }
         format.json { render json: @event, status: :created, location: @event }
       else
         format.html { render action: "new" }

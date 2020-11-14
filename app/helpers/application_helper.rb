@@ -47,4 +47,12 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def RSVP_response
+    response = ""
+    flash.each do |name, msg|
+      response = response + content_tag(:div, msg, :id => "flash_#{name}")
+    end
+    flash.discard
+    return response
+  end
 end

@@ -15,7 +15,6 @@ class RsvpqsController < ApplicationController
       @rsvp = Rsvpq.new(rsvpq_params)
       #checked_captcha = verify_recaptcha(model: @user)
     end
-
 #    if checked_captcha
       if @rsvp.save
         flash[:success] = 'Rsvp was successfully created.'
@@ -28,7 +27,7 @@ class RsvpqsController < ApplicationController
         else
           RsvpMailer.with(email: email, event: event, timeZone: params[:timeZone]).rsvp_reminder.deliver_later(wait_until: reminder_date)
         end
-        redirect_back(fallback_location: request)
+        #redirect_back(fallback_location: request)
       else
         rsvp = Rsvpq.find_by(email: @rsvp.email)
         if rsvp.nil?
@@ -36,8 +35,13 @@ class RsvpqsController < ApplicationController
         else
           flash[:error] = 'Entered email already has an rsvp for this event'
         end
-        redirect_back(fallback_location: root_path)
+        #redirect_back(fallback_location: root_path)
       end
+
+      respond_to do |format|
+        format.html {redirect_to root_path}
+      end
+
     #else
     #  flash.delete(:recaptcha_error)
     #  flash[:error] = 'Please check the captcha box!'

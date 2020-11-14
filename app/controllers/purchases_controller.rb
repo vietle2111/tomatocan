@@ -35,7 +35,8 @@ class PurchasesController < ApplicationController
 
   def create
     @purchase = Purchase.new(purchase_params)
-
+    @merch = Merchandise.find(@purchase.merchandise_id) 
+    @seller = User.find(@merch.user_id)
     # For Default Donation
     if !@purchase.merchandise_id.present?
       @purchase_mailer_hash          = { purchase: @purchase }
@@ -43,7 +44,7 @@ class PurchasesController < ApplicationController
       @purchase_mailer_hash[:seller] = @seller
       assign_user_id
       if @purchase.save_with_payment
-        flash[:notice] = 'You successfully donated $' + @purchase.pricesold.to_s + ' . Thank you for being a donor of ' + @seller.name
+        flash[:success] = 'You successfully donated $' + @purchase.pricesold.to_s + ' . Thank you for being a donor of ' + @seller.name
         redirect_to user_profile_path(@seller.permalink) 
         PurchaseMailer.with(@purchase_mailer_hash).donation_saved.deliver_later
         PurchaseMailer.with(@purchase_mailer_hash).donation_received.deliver_later
@@ -60,7 +61,7 @@ class PurchasesController < ApplicationController
         assign_user_id
         case @purchase.save_with_payment
         when true
-          flash[:notice] = 'You successfully donated $' + @merchandise.price.to_s + ' . Thank you for being a donor of ' + @seller.name
+          flash[:success] = 'You successfully donated $' + @merchandise.price.to_s + ' . Thank you for being a donor of ' + @seller.name
           redirect_to user_profile_path(@seller.permalink)
           PurchaseMailer.with(@purchase_mailer_hash).donation_saved.deliver_later
           PurchaseMailer.with(@purchase_mailer_hash).donation_received.deliver_later
@@ -76,10 +77,12 @@ class PurchasesController < ApplicationController
           filename = filename_and_data[:filename]
           data = filename_and_data[:data]
           send_data_to_buyer data, filename and return
-          redirect_to user_profile_path(@seller.permalink) 
           flash[:success] = "You have successfully completed the purchase! Thank you for being a patron of " + @seller.name
+          
+          redirect_to(user_profile_path(@seller.permalink)) and return
           PurchaseMailer.with(@purchase_mailer_hash).purchase_saved.deliver_later
           PurchaseMailer.with(@purchase_mailer_hash).purchase_received.deliver_later
+          
         when false
           redirect_back fallback_location: request.referrer, notice: 'Your order did not go through. Try again.'
         end
